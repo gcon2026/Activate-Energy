@@ -533,6 +533,7 @@
             <span class="kbd" id="stamp">Time: —</span>
             <span class="kbd" id="tapStamp">Pulses: 5</span>
           </div>
+          <button class="miniBtn" id="btnTorch" type="button" style="margin-bottom: 8px; border-color: rgba(255,204,0,0.6); color: #fc0;">Turn On Flashlight 🔥</button>
           <button class="miniBtn" id="btnClose" type="button">Close</button>
         </div>
       </div>
@@ -571,6 +572,7 @@
       successOverlay: document.getElementById("successOverlay"),
       stamp: document.getElementById("stamp"),
       tapStamp: document.getElementById("tapStamp"),
+      btnTorch: document.getElementById("btnTorch"),
       btnClose: document.getElementById("btnClose"),
       hud: document.getElementById("hud"),
       hintText: document.getElementById("hintText"),
@@ -794,6 +796,33 @@
       el.successOverlay.style.display = "none";
     }
 
+    let torchTrack = null;
+    let torchOn = false;
+
+    async function toggleTorch(){
+      try {
+        if (!torchTrack) {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: 'environment' }
+          });
+          const tracks = stream.getVideoTracks();
+          if (tracks.length > 0) torchTrack = tracks[0];
+          else throw new Error("No video tracks");
+        }
+
+        torchOn = !torchOn;
+        await torchTrack.applyConstraints({
+          advanced: [{ torch: torchOn }]
+        });
+        
+        el.btnTorch.textContent = torchOn ? 'Turn Off Flashlight 🔦' : 'Turn On Flashlight 🔥';
+        el.btnTorch.style.background = torchOn ? 'rgba(255,204,0,0.2)' : '';
+      } catch (err) {
+        console.error("Torch error:", err);
+        alert("Flashlight not supported/allowed on this device.");
+      }
+    }
+
     function onTap(x, y){
       unlockAudioOnce();
       if(state.success) return;
@@ -839,6 +868,11 @@
       el.btnTap.addEventListener("pointerdown", (e) => {
         e.stopPropagation();
         onTap(e.clientX, e.clientY);
+      });
+
+      el.btnTorch.addEventListener("pointerdown", (e) => {
+        e.stopPropagation();
+        toggleTorch();
       });
 
       el.btnClose.addEventListener("pointerdown", (e) => {
