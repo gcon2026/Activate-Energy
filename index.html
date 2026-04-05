@@ -534,7 +534,7 @@
             <span class="kbd" id="tapStamp">Pulses: 5</span>
           </div>
           <button class="miniBtn" id="btnTorch" type="button" style="margin-bottom: 8px; border-color: rgba(255,204,0,0.6); color: #fc0;">Turn On Flashlight 🔥</button>
-          <button class="miniBtn" id="btnClose" type="button">Close</button>
+          <button class="miniBtn" id="btnRefresh" type="button">Refresh</button>
         </div>
       </div>
 
@@ -573,7 +573,7 @@
       stamp: document.getElementById("stamp"),
       tapStamp: document.getElementById("tapStamp"),
       btnTorch: document.getElementById("btnTorch"),
-      btnClose: document.getElementById("btnClose"),
+      btnRefresh: document.getElementById("btnRefresh"),
       hud: document.getElementById("hud"),
       hintText: document.getElementById("hintText"),
     };
@@ -875,9 +875,9 @@
         toggleTorch();
       });
 
-      el.btnClose.addEventListener("pointerdown", (e) => {
+      el.btnRefresh.addEventListener("pointerdown", (e) => {
         e.stopPropagation();
-        hideSuccess();
+        location.reload();
       });
 
       let lastTouchEnd = 0;
