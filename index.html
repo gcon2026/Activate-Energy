@@ -554,8 +554,32 @@
     };
 
     let timerInterval = null;
-    let audioUnlocked = false;
     let audioCtx = null;
+    let audioUnlockedOnce = false;
+
+    function ensureAudio(){
+      if(audioCtx) return;
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    // iOS Safari: must call resume() on EVERY gesture.
+    // Also play a silent buffer the very first time to fully unlock audio.
+    function unlockAudio(){
+      ensureAudio();
+      // Always attempt to resume — iOS suspends the context aggressively
+      if(audioCtx.state === "suspended"){
+        audioCtx.resume();
+      }
+      if(!audioUnlockedOnce){
+        audioUnlockedOnce = true;
+        // Play a zero-length silent buffer: the iOS trick to unlock audio
+        const buf = audioCtx.createBuffer(1, 1, 22050);
+        const src = audioCtx.createBufferSource();
+        src.buffer = buf;
+        src.connect(audioCtx.destination);
+        src.start(0);
+      }
+    }
 
     const el = {
       tapSurface: document.getElementById("tapSurface"),
@@ -586,16 +610,6 @@
     document.addEventListener("gesturechange", (e) => e.preventDefault(), { passive: false });
     document.addEventListener("gestureend", (e) => e.preventDefault(), { passive: false });
 
-    function ensureAudio(){
-      if(audioCtx) return;
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    function unlockAudioOnce(){
-      if(audioUnlocked) return;
-      audioUnlocked = true;
-      ensureAudio();
-      if(audioCtx.state === "suspended") audioCtx.resume();
-    }
 
     function haptic(pattern = 15){
       if (navigator.vibrate) navigator.vibrate(pattern);
@@ -647,7 +661,7 @@
     }
 
     function playBeep(type="tap"){
-      if(!audioUnlocked) return;
+      if(!audioUnlockedOnce) return;
       ensureAudio();
       const now = audioCtx.currentTime;
 
@@ -823,7 +837,7 @@
     }
 
     function onTap(x, y){
-      unlockAudioOnce();
+      unlockAudio();
       if(state.success) return;
       if(COUNTDOWN_SECONDS > 0 && state.timeLeft === 0) return;
 
