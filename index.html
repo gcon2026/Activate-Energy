@@ -738,7 +738,7 @@
       } else if(state.timeLeft === 0 && COUNTDOWN_SECONDS > 0){
         el.subTitle.textContent = "Timer expired. Refresh to retry.";
       } else {
-        el.subTitle.textContent = `Tap ${REQUIRED_TAPS} times to activate energy`;
+        el.subTitle.textContent = `Tap ${REQUIRED_TAPS} times to send energy`;
       }
 
       const disabled = state.success || (COUNTDOWN_SECONDS > 0 && state.timeLeft === 0);
