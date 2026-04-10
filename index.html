@@ -195,13 +195,17 @@
     }
 
     .content{
-      padding: 18px 18px 16px;
+      padding: 18px 18px 0;
       display:grid;
-      grid-template-columns: 1.15fr 0.85fr;
+      grid-template-columns: 0.85fr 1.15fr;
       gap: 14px;
     }
     @media (max-width: 640px){
       .content{ grid-template-columns: 1fr; }
+    }
+
+    .btnBar{
+      padding: 14px 18px 16px;
     }
 
     .card{
@@ -646,25 +650,7 @@
       </div>
 
       <div class="content">
-        <div class="card big">
-          <div>
-            <h1 class="headline">🚀 Docking Protocol</h1>
-            <p class="hint" id="hintText"></p>
-          </div>
-
-          <div class="tapZone" id="tapZone">
-            <div class="small">Energy Sent</div>
-            <div class="count" id="count">0 / 5</div>
-
-            <div class="progress">
-              <div class="bar" id="bar"></div>
-            </div>
-
-            <button class="btn" id="btnTap" type="button">energy bar</button>
-            <div class="small">SENDING ENERGY ⚡️...</div>
-          </div>
-        </div>
-
+        <!-- Mission Timer / Objective / Diagnostics — NOW LEFT -->
         <div class="card side">
           <div class="row">
             <div class="kv"><b>Mission Timer</b><span>Countdown to lock</span></div>
@@ -679,6 +665,30 @@
             <div class="value" id="lastAction">—</div>
           </div>
         </div>
+
+        <!-- Energy counter / progress — NOW RIGHT -->
+        <div class="card big">
+          <div>
+            <h1 class="headline">🚀 Docking Protocol</h1>
+            <p class="hint" id="hintText"></p>
+          </div>
+
+          <div class="tapZone" id="tapZone">
+            <div class="small">Energy Sent</div>
+            <div class="count" id="count">0 / 5</div>
+
+            <div class="progress">
+              <div class="bar" id="bar"></div>
+            </div>
+
+            <div class="small">SENDING ENERGY ⚡️...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ✅ ENERGY BAR button — full-width at the bottom -->
+      <div class="btnBar">
+        <button class="btn" id="btnTap" type="button">energy bar</button>
       </div>
 
       <div class="successOverlay" id="successOverlay">
