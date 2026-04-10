@@ -417,6 +417,160 @@
       100%{ transform: translate(-50%, -50%) scale(2.2); opacity: 0; }
     }
 
+    /* ============================
+       ✅ PERMISSION POPUP
+       ============================ */
+    .permOverlay{
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.72);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      animation: fadeIn 0.35s ease;
+    }
+    .permOverlay.hidden{ display: none; }
+    @keyframes fadeIn{
+      from{ opacity: 0; transform: scale(0.96); }
+      to{ opacity: 1; transform: scale(1); }
+    }
+    .permCard{
+      width: min(400px, 90vw);
+      border-radius: 20px;
+      border: 1px solid rgba(0,234,255,0.40);
+      background:
+        linear-gradient(160deg, rgba(0,234,255,0.10), rgba(0,0,0,0.55)),
+        radial-gradient(600px 300px at 50% 0%, rgba(168,85,255,0.14), transparent 70%);
+      box-shadow: 0 0 40px rgba(0,234,255,0.20), 0 0 100px rgba(0,0,0,0.80);
+      padding: 28px 22px 22px;
+      text-align: center;
+      position: relative;
+      animation: slideUp 0.38s cubic-bezier(.22,1,.36,1);
+    }
+    @keyframes slideUp{
+      from{ transform: translateY(28px); opacity:0; }
+      to{ transform: translateY(0); opacity:1; }
+    }
+    .permIcon{
+      font-size: 46px;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 0 14px rgba(0,234,255,0.50));
+      display: block;
+    }
+    .permTitle{
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin: 0 0 10px;
+      text-shadow: 0 0 14px rgba(0,234,255,0.35);
+    }
+    .permText{
+      font-size: 13px;
+      color: rgba(255,255,255,0.80);
+      line-height: 1.55;
+      margin: 0 0 20px;
+    }
+    .permText strong{ color: var(--mint); }
+    .permBtnRow{
+      display: flex;
+      gap: 10px;
+    }
+    .permBtn{
+      flex: 1;
+      border: none;
+      border-radius: 12px;
+      padding: 13px 10px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.12s, box-shadow 0.12s;
+    }
+    .permBtn:active{ transform: scale(0.97); }
+    .permBtn.allow{
+      background: linear-gradient(90deg, var(--cyan), var(--mint));
+      color: #001019;
+      box-shadow: 0 0 18px rgba(0,234,255,0.30);
+    }
+    .permBtn.deny{
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.65);
+    }
+
+    /* ============================
+       ✅ BLINK SPEED SLIDER
+       ============================ */
+    .blinkSliderWrap{
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,204,0,0.30);
+      background: rgba(255,204,0,0.06);
+    }
+    .blinkSliderWrap.visible{ display: flex; }
+    .blinkSliderLabel{
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--warn);
+      text-shadow: 0 0 10px rgba(255,204,0,0.35);
+      text-align: center;
+    }
+    .blinkSliderRow{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .blinkSliderIcon{
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    input[type=range]#blinkSlider{
+      -webkit-appearance: none;
+      appearance: none;
+      flex: 1;
+      height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(255,204,0,0.25), rgba(255,204,0,0.70));
+      outline: none;
+      cursor: pointer;
+    }
+    input[type=range]#blinkSlider::-webkit-slider-thumb{
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--warn), #ff8800);
+      box-shadow: 0 0 10px rgba(255,204,0,0.55);
+      cursor: pointer;
+    }
+    input[type=range]#blinkSlider::-moz-range-thumb{
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--warn), #ff8800);
+      box-shadow: 0 0 10px rgba(255,204,0,0.55);
+      cursor: pointer;
+      border: none;
+    }
+    .blinkStatus{
+      font-size: 11px;
+      color: rgba(255,204,0,0.70);
+      text-align: center;
+      letter-spacing: 0.06em;
+    }
+
     /* ===========================
        ✅ LOGO SHINE (FIXED)
        =========================== */
@@ -534,6 +688,18 @@
             <span class="kbd" id="tapStamp">Pulses: 5</span>
           </div>
           <button class="miniBtn" id="btnTorch" type="button" style="margin-bottom: 8px; border-color: rgba(255,204,0,0.6); color: #fc0;">Turn On Flashlight 🔥</button>
+
+          <!-- ✅ Blink Speed Slider -->
+          <div class="blinkSliderWrap" id="blinkSliderWrap">
+            <div class="blinkSliderLabel">⚡ Flashlight Blink Speed</div>
+            <div class="blinkSliderRow">
+              <span class="blinkSliderIcon">🔦</span>
+              <input type="range" id="blinkSlider" min="0" max="10" value="0" step="1">
+              <span class="blinkSliderIcon">⚡</span>
+            </div>
+            <div class="blinkStatus" id="blinkStatus">No Blink (Steady)</div>
+          </div>
+
           <div id="swipeHint" style="margin-top: 14px; font-size: 12px; color: rgba(255,255,255,0.45); letter-spacing: 0.08em; text-transform: uppercase;">↓ Swipe down to restart</div>
         </div>
       </div>
@@ -811,6 +977,20 @@
 
     let torchTrack = null;
     let torchOn = false;
+    let blinkInterval = null;
+
+    /* ── Camera permission pre-request ── */
+    async function requestCameraPermission(){
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'environment' }
+        });
+        const tracks = stream.getVideoTracks();
+        if (tracks.length > 0) torchTrack = tracks[0];
+      } catch(err){
+        console.warn("Camera pre-request failed:", err);
+      }
+    }
 
     async function toggleTorch(){
       try {
@@ -830,10 +1010,49 @@
         
         el.btnTorch.textContent = torchOn ? 'Turn Off Flashlight 🔦' : 'Turn On Flashlight 🔥';
         el.btnTorch.style.background = torchOn ? 'rgba(255,204,0,0.2)' : '';
+
+        /* If torch just turned on, show slider */
+        if(torchOn){
+          document.getElementById('blinkSliderWrap').classList.add('visible');
+        }
       } catch (err) {
         console.error("Torch error:", err);
         alert("Flashlight not supported/allowed on this device.");
       }
+    }
+
+    /* ── Blink speed slider logic ── */
+    /* slider value 0 = no blink, 1-10 = progressively faster */
+    function applyBlinkSpeed(val){
+      /* Clear existing blink interval */
+      if(blinkInterval){
+        clearInterval(blinkInterval);
+        blinkInterval = null;
+        /* Ensure torch is in the ON state between blinks when stopping */
+        if(torchTrack && torchOn){
+          torchTrack.applyConstraints({ advanced: [{ torch: true }] }).catch(()=>{});
+        }
+      }
+
+      const statusEl = document.getElementById('blinkStatus');
+
+      if(val === 0){
+        statusEl.textContent = 'No Blink (Steady)';
+        return;
+      }
+
+      /* Map 1-10 → interval 2000ms → 80ms (exponential feel) */
+      const ms = Math.round(2000 / Math.pow(val, 1.35));
+      statusEl.textContent = `Blink: ~${val >= 8 ? 'Ultra Fast' : val >= 5 ? 'Fast' : val >= 3 ? 'Medium' : 'Slow'}`;
+
+      let blinkState = true;
+      blinkInterval = setInterval(async () => {
+        if(!torchTrack) return;
+        blinkState = !blinkState;
+        try{
+          await torchTrack.applyConstraints({ advanced: [{ torch: blinkState }] });
+        }catch(e){}
+      }, ms);
     }
 
     function onTap(x, y){
@@ -888,6 +1107,13 @@
         toggleTorch();
       });
 
+      /* ── Blink Slider ── */
+      const blinkSlider = document.getElementById('blinkSlider');
+      blinkSlider.addEventListener('input', () => {
+        applyBlinkSpeed(parseInt(blinkSlider.value, 10));
+      });
+      blinkSlider.addEventListener('pointerdown', (e) => e.stopPropagation());
+
       // Swipe-down to reload (only when success overlay is visible)
       let swipeStartY = null;
       el.successOverlay.addEventListener("touchstart", (e) => {
@@ -906,10 +1132,50 @@
         if (now - lastTouchEnd <= 300) event.preventDefault();
         lastTouchEnd = now;
       }, { passive: false });
+
+      /* ── Show permission popup ── */
+      showPermPopup();
+    }
+
+    /* ── Permission Popup ── */
+    function showPermPopup(){
+      const overlay = document.getElementById('permOverlay');
+      const btnAllow = document.getElementById('permAllow');
+      const btnDeny  = document.getElementById('permDeny');
+
+      overlay.classList.remove('hidden');
+
+      btnAllow.addEventListener('pointerdown', async (e) => {
+        e.stopPropagation();
+        overlay.classList.add('hidden');
+        await requestCameraPermission();
+      }, { once: true });
+
+      btnDeny.addEventListener('pointerdown', (e) => {
+        e.stopPropagation();
+        overlay.classList.add('hidden');
+      }, { once: true });
     }
 
     init();
   </script>
+
+  <!-- ✅ Permission Popup -->
+  <div class="permOverlay hidden" id="permOverlay">
+    <div class="permCard">
+      <span class="permIcon">🔦</span>
+      <h2 class="permTitle">Camera Access Needed</h2>
+      <p class="permText">
+        Please <strong>Allow access to send energy</strong>.<br/>
+        Granting camera access now lets the flashlight activate instantly
+        when you reach <strong>100 energy sent</strong> — no extra prompts.
+      </p>
+      <div class="permBtnRow">
+        <button class="permBtn deny" id="permDeny" type="button">Not Now</button>
+        <button class="permBtn allow" id="permAllow" type="button">Allow Access ⚡</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ✅ TOP-LEFT logo with shine sweep -->
   <div class="bottom-logo">
