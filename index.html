@@ -1,11 +1,9 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
   <title>Mission Control</title>
 
   <!-- ✅ Force dark mode hints -->
@@ -13,19 +11,20 @@
   <meta name="color-scheme" content="dark" />
 
   <style>
-    :root{
-      --cyan:#00eaff;
-      --mint:#00ff9c;
-      --mag:#a855ff;
-      --warn:#ffcc00;
-      --text: rgba(255,255,255,0.92);
-      --muted: rgba(255,255,255,0.70);
+    :root {
+      --cyan: #00eaff;
+      --mint: #00ff9c;
+      --mag: #a855ff;
+      --warn: #ffcc00;
+      --text: rgba(255, 255, 255, 0.92);
+      --muted: rgba(255, 255, 255, 0.70);
       --danger: #ff4d6d;
       color-scheme: dark;
     }
 
     /* ✅ HARD LOCK: stop scroll / swipe / bounce */
-    html, body{
+    html,
+    body {
       height: 100%;
       width: 100%;
       margin: 0;
@@ -36,7 +35,7 @@
       inset: 0;
     }
 
-    body{
+    body {
       background: radial-gradient(1200px 800px at 50% 20%, #09223a 0%, #02060b 55%, #000 100%);
       color: var(--text);
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -48,242 +47,294 @@
     }
 
     /* ✅ if user device is light mode, still keep dark */
-    @media (prefers-color-scheme: light){
-      html, body{
+    @media (prefers-color-scheme: light) {
+
+      html,
+      body {
         background-color: #000 !important;
         color: #fff !important;
       }
     }
 
     /* Starfield */
-    .stars, .stars::before, .stars::after{
-      content:"";
-      position:absolute;
-      inset:-200px;
+    .stars,
+    .stars::before,
+    .stars::after {
+      content: "";
+      position: absolute;
+      inset: -200px;
       background-repeat: repeat;
       background-size: 600px 600px;
       opacity: 0.55;
       animation: drift 38s linear infinite;
-      pointer-events:none;
+      pointer-events: none;
     }
-    .stars{
+
+    .stars {
       background-image:
-        radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.55) 50%, transparent 55%),
-        radial-gradient(1.5px 1.5px at 140px 220px, rgba(0,234,255,0.55) 50%, transparent 55%),
-        radial-gradient(1.8px 1.8px at 420px 90px, rgba(255,255,255,0.45) 50%, transparent 55%),
-        radial-gradient(1.2px 1.2px at 520px 420px, rgba(0,255,156,0.50) 50%, transparent 55%),
-        radial-gradient(1px 1px at 320px 540px, rgba(255,255,255,0.40) 50%, transparent 55%);
-      filter: drop-shadow(0 0 6px rgba(0,234,255,0.20));
+        radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.55) 50%, transparent 55%),
+        radial-gradient(1.5px 1.5px at 140px 220px, rgba(0, 234, 255, 0.55) 50%, transparent 55%),
+        radial-gradient(1.8px 1.8px at 420px 90px, rgba(255, 255, 255, 0.45) 50%, transparent 55%),
+        radial-gradient(1.2px 1.2px at 520px 420px, rgba(0, 255, 156, 0.50) 50%, transparent 55%),
+        radial-gradient(1px 1px at 320px 540px, rgba(255, 255, 255, 0.40) 50%, transparent 55%);
+      filter: drop-shadow(0 0 6px rgba(0, 234, 255, 0.20));
     }
-    .stars::before{
+
+    .stars::before {
       background-image:
-        radial-gradient(2px 2px at 80px 120px, rgba(255,255,255,0.40) 50%, transparent 55%),
-        radial-gradient(1.3px 1.3px at 260px 310px, rgba(168,85,255,0.45) 50%, transparent 55%),
-        radial-gradient(1.6px 1.6px at 490px 260px, rgba(0,234,255,0.35) 50%, transparent 55%),
-        radial-gradient(1px 1px at 380px 40px, rgba(255,255,255,0.35) 50%, transparent 55%);
-      opacity:0.45;
+        radial-gradient(2px 2px at 80px 120px, rgba(255, 255, 255, 0.40) 50%, transparent 55%),
+        radial-gradient(1.3px 1.3px at 260px 310px, rgba(168, 85, 255, 0.45) 50%, transparent 55%),
+        radial-gradient(1.6px 1.6px at 490px 260px, rgba(0, 234, 255, 0.35) 50%, transparent 55%),
+        radial-gradient(1px 1px at 380px 40px, rgba(255, 255, 255, 0.35) 50%, transparent 55%);
+      opacity: 0.45;
       animation-duration: 52s;
-      transform: translate3d(0,0,0) scale(1.05);
+      transform: translate3d(0, 0, 0) scale(1.05);
     }
-    .stars::after{
+
+    .stars::after {
       background-image:
-        radial-gradient(1.2px 1.2px at 40px 480px, rgba(0,255,156,0.40) 50%, transparent 55%),
-        radial-gradient(1.4px 1.4px at 210px 70px, rgba(255,255,255,0.35) 50%, transparent 55%),
-        radial-gradient(1.1px 1.1px at 560px 180px, rgba(0,234,255,0.30) 50%, transparent 55%),
-        radial-gradient(1.3px 1.3px at 360px 360px, rgba(255,255,255,0.30) 50%, transparent 55%);
-      opacity:0.35;
+        radial-gradient(1.2px 1.2px at 40px 480px, rgba(0, 255, 156, 0.40) 50%, transparent 55%),
+        radial-gradient(1.4px 1.4px at 210px 70px, rgba(255, 255, 255, 0.35) 50%, transparent 55%),
+        radial-gradient(1.1px 1.1px at 560px 180px, rgba(0, 234, 255, 0.30) 50%, transparent 55%),
+        radial-gradient(1.3px 1.3px at 360px 360px, rgba(255, 255, 255, 0.30) 50%, transparent 55%);
+      opacity: 0.35;
       animation-duration: 68s;
-      transform: translate3d(0,0,0) scale(1.1);
+      transform: translate3d(0, 0, 0) scale(1.1);
     }
-    @keyframes drift{
-      0%{ transform: translate3d(0,0,0); }
-      100%{ transform: translate3d(160px, 220px, 0); }
+
+    @keyframes drift {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+
+      100% {
+        transform: translate3d(160px, 220px, 0);
+      }
     }
 
     /* Scanline overlay */
-    .scanlines{
-      position:absolute; inset:0;
-      background: repeating-linear-gradient(
-        to bottom,
-        rgba(255,255,255,0.03),
-        rgba(255,255,255,0.03) 1px,
-        rgba(0,0,0,0) 3px,
-        rgba(0,0,0,0) 7px
-      );
+    .scanlines {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(to bottom,
+          rgba(255, 255, 255, 0.03),
+          rgba(255, 255, 255, 0.03) 1px,
+          rgba(0, 0, 0, 0) 3px,
+          rgba(0, 0, 0, 0) 7px);
       mix-blend-mode: overlay;
-      opacity:0.20;
-      pointer-events:none;
-    }
-    .scanner{
-      position:absolute; inset:-30%;
-      background: linear-gradient(transparent 40%, rgba(0,234,255,0.10) 50%, transparent 60%);
-      animation: sweep 3.6s ease-in-out infinite;
-      pointer-events:none;
-      opacity:0.85;
-    }
-    @keyframes sweep{
-      0%{ transform: translateY(-35%); }
-      50%{ transform: translateY(35%); }
-      100%{ transform: translateY(-35%); }
+      opacity: 0.20;
+      pointer-events: none;
     }
 
-    .wrap{
-      position:absolute;
+    .scanner {
+      position: absolute;
+      inset: -30%;
+      background: linear-gradient(transparent 40%, rgba(0, 234, 255, 0.10) 50%, transparent 60%);
+      animation: sweep 3.6s ease-in-out infinite;
+      pointer-events: none;
+      opacity: 0.85;
+    }
+
+    @keyframes sweep {
+      0% {
+        transform: translateY(-35%);
+      }
+
+      50% {
+        transform: translateY(35%);
+      }
+
+      100% {
+        transform: translateY(-35%);
+      }
+    }
+
+    .wrap {
+      position: absolute;
       inset: 0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       padding: 22px;
     }
 
-    .hud{
+    .hud {
       width: min(720px, 96vw);
-      border: 1px solid rgba(0,234,255,0.35);
+      border: 1px solid rgba(0, 234, 255, 0.35);
       border-radius: 18px;
       background:
-        linear-gradient(180deg, rgba(0,234,255,0.07), rgba(0,0,0,0.25)),
-        radial-gradient(800px 260px at 20% 0%, rgba(0,255,156,0.12), transparent 55%),
-        radial-gradient(800px 260px at 80% 0%, rgba(168,85,255,0.10), transparent 55%);
-      box-shadow: 0 0 30px rgba(0,234,255,0.18), 0 0 80px rgba(0,0,0,0.60);
-      overflow:hidden;
-      position:relative;
+        linear-gradient(180deg, rgba(0, 234, 255, 0.07), rgba(0, 0, 0, 0.25)),
+        radial-gradient(800px 260px at 20% 0%, rgba(0, 255, 156, 0.12), transparent 55%),
+        radial-gradient(800px 260px at 80% 0%, rgba(168, 85, 255, 0.10), transparent 55%);
+      box-shadow: 0 0 30px rgba(0, 234, 255, 0.18), 0 0 80px rgba(0, 0, 0, 0.60);
+      overflow: hidden;
+      position: relative;
     }
 
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       padding: 14px 16px;
-      border-bottom: 1px solid rgba(0,234,255,0.25);
+      border-bottom: 1px solid rgba(0, 234, 255, 0.25);
       gap: 10px;
     }
 
-    .brand{ display:flex; flex-direction:column; gap:4px; min-width:0; }
-    .brand .title{
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .brand .title {
       font-weight: 800;
       letter-spacing: 0.12em;
       color: var(--cyan);
       text-transform: uppercase;
       font-size: 12px;
       white-space: nowrap;
-      overflow:hidden;
+      overflow: hidden;
       text-overflow: ellipsis;
     }
-    .brand .sub{ font-size: 12px; color: var(--muted); }
 
-    .status{
-      display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end;
+    .brand .sub {
       font-size: 12px;
       color: var(--muted);
     }
-    .pill{
-      border: 1px solid rgba(0,234,255,0.28);
-      border-radius: 999px;
-      padding: 6px 10px;
-      background: rgba(0,234,255,0.06);
-      display:inline-flex; gap:8px; align-items:center;
-      white-space: nowrap;
-    }
-    .dot{
-      width:8px; height:8px; border-radius:99px;
-      background: var(--warn);
-      box-shadow: 0 0 12px rgba(255,204,0,0.35);
-    }
-    .dot.ok{
-      background: var(--mint);
-      box-shadow: 0 0 12px rgba(0,255,156,0.40);
+
+    .status {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      font-size: 12px;
+      color: var(--muted);
     }
 
-    .content{
+    .pill {
+      border: 1px solid rgba(0, 234, 255, 0.28);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: rgba(0, 234, 255, 0.06);
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 99px;
+      background: var(--warn);
+      box-shadow: 0 0 12px rgba(255, 204, 0, 0.35);
+    }
+
+    .dot.ok {
+      background: var(--mint);
+      box-shadow: 0 0 12px rgba(0, 255, 156, 0.40);
+    }
+
+    .content {
       padding: 18px 18px 0;
-      display:grid;
+      display: grid;
       grid-template-columns: 0.85fr 1.15fr;
       gap: 14px;
     }
-    @media (max-width: 640px){
-      .content{ grid-template-columns: 1fr; }
+
+    @media (max-width: 640px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
     }
 
-    .btnBar{
+    .btnBar {
       padding: 14px 18px 16px;
     }
 
-    .card{
-      border: 1px solid rgba(0,234,255,0.20);
-      background: rgba(0,0,0,0.22);
+    .card {
+      border: 1px solid rgba(0, 234, 255, 0.20);
+      background: rgba(0, 0, 0, 0.22);
       border-radius: 16px;
       padding: 14px;
-      position:relative;
-      overflow:hidden;
+      position: relative;
+      overflow: hidden;
     }
 
-    .big{
-      display:flex;
-      flex-direction:column;
+    .big {
+      display: flex;
+      flex-direction: column;
       gap: 12px;
       min-height: 250px;
-      justify-content:space-between;
+      justify-content: space-between;
     }
-    .headline{
+
+    .headline {
       font-size: clamp(18px, 2.6vw, 26px);
       font-weight: 900;
       letter-spacing: 0.04em;
       margin: 0;
-      color: rgba(255,255,255,0.95);
+      color: rgba(255, 255, 255, 0.95);
     }
-    .hint{
+
+    .hint {
       margin: 6px 0 0;
       color: var(--muted);
       line-height: 1.35;
       font-size: 13px;
     }
 
-    .tapZone{
-      border: 1px dashed rgba(0,234,255,0.40);
-      background: rgba(0,234,255,0.05);
+    .tapZone {
+      border: 1px dashed rgba(0, 234, 255, 0.40);
+      background: rgba(0, 234, 255, 0.05);
       border-radius: 14px;
       padding: 14px;
-      display:flex;
-      flex-direction:column;
+      display: flex;
+      flex-direction: column;
       gap: 12px;
-      align-items:center;
-      justify-content:center;
-      position:relative;
+      align-items: center;
+      justify-content: center;
+      position: relative;
       min-height: 150px;
     }
-    .tapZone .count{
+
+    .tapZone .count {
       font-size: 44px;
       font-weight: 900;
       color: #fff;
-      text-shadow: 0 0 18px rgba(0,234,255,0.25);
+      text-shadow: 0 0 18px rgba(0, 234, 255, 0.25);
     }
-    .tapZone .small{
+
+    .tapZone .small {
       font-size: 12px;
       color: var(--muted);
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      text-align:center;
+      text-align: center;
     }
 
-    .progress{
+    .progress {
       height: 10px;
-      background: rgba(255,255,255,0.08);
+      background: rgba(255, 255, 255, 0.08);
       border-radius: 999px;
-      overflow:hidden;
-      border: 1px solid rgba(0,234,255,0.15);
-      width:100%;
+      overflow: hidden;
+      border: 1px solid rgba(0, 234, 255, 0.15);
+      width: 100%;
     }
-    .bar{
-      height:100%;
-      width:0%;
-      background: linear-gradient(90deg, rgba(0,234,255,0.95), rgba(0,255,156,0.95));
-      box-shadow: 0 0 14px rgba(0,234,255,0.35);
+
+    .bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, rgba(0, 234, 255, 0.95), rgba(0, 255, 156, 0.95));
+      box-shadow: 0 0 14px rgba(0, 234, 255, 0.35);
       transition: width 180ms ease;
     }
 
-    .btn{
-      width:100%;
-      border:none;
+    .btn {
+      width: 100%;
+      border: none;
       border-radius: 14px;
       padding: 14px 14px;
       font-size: 15px;
@@ -292,103 +343,139 @@
       text-transform: uppercase;
       color: #001019;
       background: linear-gradient(90deg, var(--cyan), var(--mint));
-      box-shadow: 0 0 18px rgba(0,234,255,0.25), 0 0 26px rgba(0,255,156,0.18);
-      cursor:pointer;
+      box-shadow: 0 0 18px rgba(0, 234, 255, 0.25), 0 0 26px rgba(0, 255, 156, 0.18);
+      cursor: pointer;
     }
-    .btn:active{ transform: scale(0.99); }
 
-    .side .row{
-      display:flex; align-items:center; justify-content:space-between;
+    .btn:active {
+      transform: scale(0.99);
+    }
+
+    .side .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       gap: 10px;
       padding: 10px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
       font-size: 13px;
       color: var(--muted);
     }
-    .side .row:last-child{ border-bottom:none; }
-    .kv{ display:flex; flex-direction:column; gap:4px; min-width:0; }
-    .kv b{
-      color: rgba(255,255,255,0.92);
+
+    .side .row:last-child {
+      border-bottom: none;
+    }
+
+    .kv {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .kv b {
+      color: rgba(255, 255, 255, 0.92);
       font-size: 13px;
       letter-spacing: 0.05em;
       text-transform: uppercase;
     }
-    .value{ font-variant-numeric: tabular-nums; color: rgba(255,255,255,0.92); }
 
-    .successOverlay{
-      position:absolute; inset:0;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      background: radial-gradient(700px 420px at 50% 40%, rgba(0,255,156,0.12), rgba(0,0,0,0.82));
+    .value {
+      font-variant-numeric: tabular-nums;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .successOverlay {
+      position: absolute;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(700px 420px at 50% 40%, rgba(0, 255, 156, 0.12), rgba(0, 0, 0, 0.82));
       backdrop-filter: blur(4px);
       z-index: 9;
     }
-    .successCard{
+
+    .successCard {
       width: min(560px, 92vw);
       border-radius: 18px;
-      border: 1px solid rgba(0,255,156,0.55);
-      background: linear-gradient(180deg, rgba(0,30,20,0.97), rgba(0,10,8,0.98));
-      box-shadow: 0 0 40px rgba(0,255,156,0.22), 0 0 120px rgba(0,0,0,0.95),
-                  inset 0 1px 0 rgba(0,255,156,0.15);
+      border: 1px solid rgba(0, 255, 156, 0.55);
+      background: linear-gradient(180deg, rgba(0, 30, 20, 0.97), rgba(0, 10, 8, 0.98));
+      box-shadow: 0 0 40px rgba(0, 255, 156, 0.22), 0 0 120px rgba(0, 0, 0, 0.95),
+        inset 0 1px 0 rgba(0, 255, 156, 0.15);
       padding: 18px;
-      text-align:center;
+      text-align: center;
     }
-    .successTitle{
+
+    .successTitle {
       margin: 0;
       font-size: clamp(26px, 4vw, 42px);
       letter-spacing: 0.10em;
       font-weight: 950;
       color: var(--mint);
-      text-shadow: 0 0 18px rgba(0,255,156,0.35);
+      text-shadow: 0 0 18px rgba(0, 255, 156, 0.35);
       text-transform: uppercase;
     }
-    .successText{
+
+    .successText {
       margin: 10px 0 0;
-      color: rgba(255,255,255,0.88);
+      color: rgba(255, 255, 255, 0.88);
       line-height: 1.35;
       font-size: 14px;
     }
-    .successMeta{
+
+    .successMeta {
       margin-top: 12px;
-      display:flex;
-      flex-wrap:wrap;
+      display: flex;
+      flex-wrap: wrap;
       gap: 10px;
-      justify-content:center;
+      justify-content: center;
       font-size: 12px;
       color: var(--muted);
     }
-    .miniBtn{
+
+    .miniBtn {
       margin-top: 14px;
       border-radius: 12px;
-      border: 1px solid rgba(0,255,156,0.45);
-      background: rgba(0,255,156,0.08);
-      color: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0, 255, 156, 0.45);
+      background: rgba(0, 255, 156, 0.08);
+      color: rgba(255, 255, 255, 0.92);
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       padding: 10px 12px;
-      cursor:pointer;
+      cursor: pointer;
       width: 100%;
     }
 
-    .particle{
-      position:absolute;
+    .particle {
+      position: absolute;
       width: 6px;
       height: 10px;
       border-radius: 2px;
       opacity: 0.9;
       animation: fall 1.6s linear forwards;
-      pointer-events:none;
+      pointer-events: none;
     }
-    @keyframes fall{
-      0%{ transform: translateY(-20px) rotate(0deg); opacity: 0; }
-      10%{ opacity: 1; }
-      100%{ transform: translateY(520px) rotate(260deg); opacity: 0; }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-20px) rotate(0deg);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(520px) rotate(260deg);
+        opacity: 0;
+      }
     }
 
     /* ✅ Tap sparks */
-    .spark{
+    .spark {
       position: fixed;
       width: 10px;
       height: 10px;
@@ -397,95 +484,139 @@
       z-index: 9999;
       mix-blend-mode: screen;
       animation: sparkMove 520ms ease-out forwards;
-      filter: drop-shadow(0 0 10px rgba(0,234,255,0.55));
+      filter: drop-shadow(0 0 10px rgba(0, 234, 255, 0.55));
       opacity: 0.95;
     }
-    @keyframes sparkMove{
-      0%{ transform: translate(0,0) scale(1); opacity: 1; }
-      100%{ transform: translate(var(--dx), var(--dy)) scale(0.15); opacity: 0; }
+
+    @keyframes sparkMove {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translate(var(--dx), var(--dy)) scale(0.15);
+        opacity: 0;
+      }
     }
 
-    .sparkRing{
+    .sparkRing {
       position: fixed;
       width: 22px;
       height: 22px;
       border-radius: 999px;
-      border: 2px solid rgba(0,234,255,0.65);
+      border: 2px solid rgba(0, 234, 255, 0.65);
       pointer-events: none;
       z-index: 9999;
       mix-blend-mode: screen;
       animation: ring 380ms ease-out forwards;
-      box-shadow: 0 0 18px rgba(0,234,255,0.25);
+      box-shadow: 0 0 18px rgba(0, 234, 255, 0.25);
     }
-    @keyframes ring{
-      0%{ transform: translate(-50%, -50%) scale(0.55); opacity: 0.9; }
-      100%{ transform: translate(-50%, -50%) scale(2.2); opacity: 0; }
+
+    @keyframes ring {
+      0% {
+        transform: translate(-50%, -50%) scale(0.55);
+        opacity: 0.9;
+      }
+
+      100% {
+        transform: translate(-50%, -50%) scale(2.2);
+        opacity: 0;
+      }
     }
 
     /* ============================
        ✅ PERMISSION POPUP
        ============================ */
-    .permOverlay{
+    .permOverlay {
       position: fixed;
       inset: 0;
       z-index: 10000;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(0,0,0,0.72);
+      background: rgba(0, 0, 0, 0.72);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       animation: fadeIn 0.35s ease;
     }
-    .permOverlay.hidden{ display: none; }
-    @keyframes fadeIn{
-      from{ opacity: 0; transform: scale(0.96); }
-      to{ opacity: 1; transform: scale(1); }
+
+    .permOverlay.hidden {
+      display: none;
     }
-    .permCard{
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.96);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .permCard {
       width: min(400px, 90vw);
       border-radius: 20px;
-      border: 1px solid rgba(0,234,255,0.40);
+      border: 1px solid rgba(0, 234, 255, 0.40);
       background:
-        linear-gradient(160deg, rgba(0,234,255,0.10), rgba(0,0,0,0.55)),
-        radial-gradient(600px 300px at 50% 0%, rgba(168,85,255,0.14), transparent 70%);
-      box-shadow: 0 0 40px rgba(0,234,255,0.20), 0 0 100px rgba(0,0,0,0.80);
+        linear-gradient(160deg, rgba(0, 234, 255, 0.10), rgba(0, 0, 0, 0.55)),
+        radial-gradient(600px 300px at 50% 0%, rgba(168, 85, 255, 0.14), transparent 70%);
+      box-shadow: 0 0 40px rgba(0, 234, 255, 0.20), 0 0 100px rgba(0, 0, 0, 0.80);
       padding: 28px 22px 22px;
       text-align: center;
       position: relative;
-      animation: slideUp 0.38s cubic-bezier(.22,1,.36,1);
+      animation: slideUp 0.38s cubic-bezier(.22, 1, .36, 1);
     }
-    @keyframes slideUp{
-      from{ transform: translateY(28px); opacity:0; }
-      to{ transform: translateY(0); opacity:1; }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(28px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
-    .permIcon{
+
+    .permIcon {
       font-size: 46px;
       margin-bottom: 10px;
-      filter: drop-shadow(0 0 14px rgba(0,234,255,0.50));
+      filter: drop-shadow(0 0 14px rgba(0, 234, 255, 0.50));
       display: block;
     }
-    .permTitle{
+
+    .permTitle {
       font-size: 18px;
       font-weight: 900;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--cyan);
       margin: 0 0 10px;
-      text-shadow: 0 0 14px rgba(0,234,255,0.35);
+      text-shadow: 0 0 14px rgba(0, 234, 255, 0.35);
     }
-    .permText{
+
+    .permText {
       font-size: 13px;
-      color: rgba(255,255,255,0.80);
+      color: rgba(255, 255, 255, 0.80);
       line-height: 1.55;
       margin: 0 0 20px;
     }
-    .permText strong{ color: var(--mint); }
-    .permBtnRow{
+
+    .permText strong {
+      color: var(--mint);
+    }
+
+    .permBtnRow {
       display: flex;
       gap: 10px;
     }
-    .permBtn{
+
+    .permBtn {
       flex: 1;
       border: none;
       border-radius: 12px;
@@ -497,82 +628,98 @@
       cursor: pointer;
       transition: transform 0.12s, box-shadow 0.12s;
     }
-    .permBtn:active{ transform: scale(0.97); }
-    .permBtn.allow{
+
+    .permBtn:active {
+      transform: scale(0.97);
+    }
+
+    .permBtn.allow {
       background: linear-gradient(90deg, var(--cyan), var(--mint));
       color: #001019;
-      box-shadow: 0 0 18px rgba(0,234,255,0.30);
+      box-shadow: 0 0 18px rgba(0, 234, 255, 0.30);
     }
-    .permBtn.deny{
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.18);
-      color: rgba(255,255,255,0.65);
+
+    .permBtn.deny {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: rgba(255, 255, 255, 0.65);
     }
 
     /* ============================
        ✅ BLINK SPEED SLIDER
        ============================ */
-    .blinkSliderWrap{
+    .blinkSliderWrap {
       display: none;
       flex-direction: column;
       gap: 8px;
       margin-top: 14px;
       padding: 14px;
       border-radius: 14px;
-      border: 1px solid rgba(255,204,0,0.30);
-      background: rgba(255,204,0,0.06);
+      border: 1px solid rgba(255, 204, 0, 0.30);
+      background: rgba(255, 204, 0, 0.06);
     }
-    .blinkSliderWrap.visible{ display: flex; }
-    .blinkSliderLabel{
+
+    .blinkSliderWrap.visible {
+      display: flex;
+    }
+
+    .blinkSliderLabel {
       font-size: 12px;
       font-weight: 800;
       letter-spacing: 0.09em;
       text-transform: uppercase;
       color: var(--warn);
-      text-shadow: 0 0 10px rgba(255,204,0,0.35);
+      text-shadow: 0 0 10px rgba(255, 204, 0, 0.35);
       text-align: center;
     }
-    .blinkSliderRow{
+
+    .blinkSliderRow {
       display: flex;
       align-items: center;
       gap: 10px;
     }
-    .blinkSliderIcon{
+
+    .blinkSliderIcon {
       font-size: 16px;
       flex-shrink: 0;
     }
-    input[type=range]#blinkSlider{
+
+    input[type=range]#blinkSlider {
       -webkit-appearance: none;
       appearance: none;
       flex: 1;
       height: 6px;
       border-radius: 999px;
-      background: linear-gradient(90deg, rgba(255,204,0,0.25), rgba(255,204,0,0.70));
+      background: linear-gradient(90deg, rgba(255, 204, 0, 0.25), rgba(255, 204, 0, 0.70));
       outline: none;
       cursor: pointer;
-      touch-action: pan-x;  /* FIX 2: allow horizontal finger-drag on mobile */
+      touch-action: pan-x;
+      /* FIX 2: allow horizontal finger-drag on mobile */
     }
-    input[type=range]#blinkSlider::-webkit-slider-thumb{
+
+    input[type=range]#blinkSlider::-webkit-slider-thumb {
       -webkit-appearance: none;
       width: 20px;
       height: 20px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--warn), #ff8800);
-      box-shadow: 0 0 10px rgba(255,204,0,0.55);
+      box-shadow: 0 0 10px rgba(255, 204, 0, 0.55);
       cursor: pointer;
     }
-    input[type=range]#blinkSlider::-moz-range-thumb{
+
+    input[type=range]#blinkSlider::-moz-range-thumb {
       width: 20px;
       height: 20px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--warn), #ff8800);
-      box-shadow: 0 0 10px rgba(255,204,0,0.55);
+      box-shadow: 0 0 10px rgba(255, 204, 0, 0.55);
       cursor: pointer;
       border: none;
     }
-    .blinkStatus{
+
+    .blinkStatus {
       font-size: 11px;
-      color: rgba(255,204,0,0.70);
+      color: rgba(255, 204, 0, 0.70);
       text-align: center;
       letter-spacing: 0.06em;
     }
@@ -580,43 +727,63 @@
     /* ===========================
        ✅ LOGO SHINE (FIXED)
        =========================== */
-    @keyframes shineSweep{
-      0%   { transform: translateX(-140%) rotate(18deg); opacity: 0; }
-      10%  { opacity: 1; }
-      45%  { transform: translateX(140%) rotate(18deg); opacity: 1; }
-      55%  { opacity: 0; }
-      100% { transform: translateX(140%) rotate(18deg); opacity: 0; }
+    @keyframes shineSweep {
+      0% {
+        transform: translateX(-140%) rotate(18deg);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      45% {
+        transform: translateX(140%) rotate(18deg);
+        opacity: 1;
+      }
+
+      55% {
+        opacity: 0;
+      }
+
+      100% {
+        transform: translateX(140%) rotate(18deg);
+        opacity: 0;
+      }
     }
 
     /* ✅ TOP-LEFT logo */
-    .bottom-logo{
+    .bottom-logo {
       position: fixed;
-      top: 10px;          /* ✅ top */
-      left: 20px;         /* ✅ left */
-      width: 64px;        /* ✅ size */
+      top: 10px;
+      /* ✅ top */
+      left: 20px;
+      /* ✅ left */
+      width: 64px;
+      /* ✅ size */
       z-index: 50;
       pointer-events: none;
 
-      overflow: hidden;   /* ✅ clip the shine */
-      border-radius: 8px; /* optional */
+      overflow: hidden;
+      /* ✅ clip the shine */
+      border-radius: 8px;
+      /* optional */
     }
 
-    .bottom-logo img{
+    .bottom-logo img {
       width: 100%;
       height: auto;
       display: block;
     }
 
-    .bottom-logo::after{
+    .bottom-logo::after {
       content: "";
       position: absolute;
       inset: -40%;
-      background: linear-gradient(
-        120deg,
-        transparent 40%,
-        rgba(255,255,255,0.45) 50%,
-        transparent 60%
-      );
+      background: linear-gradient(120deg,
+          transparent 40%,
+          rgba(255, 255, 255, 0.45) 50%,
+          transparent 60%);
       transform: translateX(-140%) rotate(18deg);
       animation: shineSweep 4s ease-in-out infinite;
       mix-blend-mode: screen;
@@ -658,7 +825,7 @@
           </div>
           <div class="row">
             <div class="kv"><b>Objective</b><span>Required pulses</span></div>
-            <div class="value">100</div>
+            <div class="value">50</div>
           </div>
           <div class="row">
             <div class="kv"><b>Diagnostics</b><span>Last action</span></div>
@@ -699,7 +866,8 @@
             <span class="kbd" id="stamp">Time: —</span>
             <span class="kbd" id="tapStamp">Pulses: 5</span>
           </div>
-          <button class="miniBtn" id="btnTorch" type="button" style="margin-bottom: 8px; border-color: rgba(255,204,0,0.6); color: #fc0;">Turn On Flashlight 🔥</button>
+          <button class="miniBtn" id="btnTorch" type="button"
+            style="margin-bottom: 8px; border-color: rgba(255,204,0,0.6); color: #fc0;">Turn On Flashlight 🔥</button>
 
           <!-- ✅ Blink Speed Slider -->
           <div class="blinkSliderWrap" id="blinkSliderWrap">
@@ -712,7 +880,9 @@
             <div class="blinkStatus" id="blinkStatus">No Blink (Steady)</div>
           </div>
 
-          <div id="swipeHint" style="margin-top: 14px; font-size: 12px; color: rgba(255,255,255,0.45); letter-spacing: 0.08em; text-transform: uppercase;">↓ Swipe down to restart</div>
+          <div id="swipeHint"
+            style="margin-top: 14px; font-size: 12px; color: rgba(255,255,255,0.45); letter-spacing: 0.08em; text-transform: uppercase;">
+            ↓ Swipe down to restart</div>
         </div>
       </div>
 
@@ -720,7 +890,7 @@
   </div>
 
   <script>
-    const REQUIRED_TAPS = 100;
+    const REQUIRED_TAPS = 50;
     const COUNTDOWN_SECONDS = 45; // set 0 to disable timer
 
     let state = {
@@ -735,20 +905,20 @@
     let audioCtx = null;
     let audioUnlockedOnce = false;
 
-    function ensureAudio(){
-      if(audioCtx) return;
+    function ensureAudio() {
+      if (audioCtx) return;
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     }
 
     // iOS Safari: must call resume() on EVERY gesture.
     // Also play a silent buffer the very first time to fully unlock audio.
-    function unlockAudio(){
+    function unlockAudio() {
       ensureAudio();
       // Always attempt to resume — iOS suspends the context aggressively
-      if(audioCtx.state === "suspended"){
+      if (audioCtx.state === "suspended") {
         audioCtx.resume();
       }
-      if(!audioUnlockedOnce){
+      if (!audioUnlockedOnce) {
         audioUnlockedOnce = true;
         // Play a zero-length silent buffer: the iOS trick to unlock audio
         const buf = audioCtx.createBuffer(1, 1, 22050);
@@ -789,19 +959,19 @@
     document.addEventListener("gestureend", (e) => e.preventDefault(), { passive: false });
 
 
-    function haptic(pattern = 15){
+    function haptic(pattern = 15) {
       if (navigator.vibrate) navigator.vibrate(pattern);
     }
 
-    function randBetween(a,b){ return a + Math.random()*(b-a); }
+    function randBetween(a, b) { return a + Math.random() * (b - a); }
 
-    function spawnTapSparks(clientX, clientY){
+    function spawnTapSparks(clientX, clientY) {
       const ring = document.createElement("div");
       ring.className = "sparkRing";
       ring.style.left = clientX + "px";
-      ring.style.top  = clientY + "px";
+      ring.style.top = clientY + "px";
       document.body.appendChild(ring);
-      setTimeout(()=>ring.remove(), 450);
+      setTimeout(() => ring.remove(), 450);
 
       const colors = [
         "rgba(0,234,255,0.95)",
@@ -811,46 +981,46 @@
       ];
 
       const count = 12;
-      for(let i=0;i<count;i++){
+      for (let i = 0; i < count; i++) {
         const s = document.createElement("div");
         s.className = "spark";
 
         const size = randBetween(4, 10);
-        s.style.width  = size + "px";
+        s.style.width = size + "px";
         s.style.height = size + "px";
 
-        s.style.left = (clientX - size/2) + "px";
-        s.style.top  = (clientY - size/2) + "px";
+        s.style.left = (clientX - size / 2) + "px";
+        s.style.top = (clientY - size / 2) + "px";
 
         const angle = randBetween(0, Math.PI * 2);
-        const dist  = randBetween(18, 70);
+        const dist = randBetween(18, 70);
         const dx = Math.cos(angle) * dist;
         const dy = Math.sin(angle) * dist;
 
         s.style.setProperty("--dx", dx.toFixed(1) + "px");
         s.style.setProperty("--dy", dy.toFixed(1) + "px");
 
-        const c = colors[Math.floor(Math.random()*colors.length)];
+        const c = colors[Math.floor(Math.random() * colors.length)];
         s.style.background = c;
 
         document.body.appendChild(s);
-        setTimeout(()=>s.remove(), 650);
+        setTimeout(() => s.remove(), 650);
       }
     }
 
-    function playBeep(type="tap"){
-      if(!audioUnlockedOnce) return;
+    function playBeep(type = "tap") {
+      if (!audioUnlockedOnce) return;
       ensureAudio();
       const now = audioCtx.currentTime;
 
       const filter = audioCtx.createBiquadFilter();
       filter.type = "lowpass";
-      filter.frequency.setValueAtTime(type==="success" ? 2200 : 1600, now);
+      filter.frequency.setValueAtTime(type === "success" ? 2200 : 1600, now);
 
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
 
-      if(type === "tap"){
+      if (type === "tap") {
         osc.type = "square";
         osc.frequency.setValueAtTime(520, now);
         osc.frequency.exponentialRampToValueAtTime(780, now + 0.06);
@@ -880,22 +1050,22 @@
       }
     }
 
-    function formatTMinus(sec){
+    function formatTMinus(sec) {
       const s = Math.max(0, Math.floor(sec));
-      const mm = String(Math.floor(s / 60)).padStart(2,"0");
-      const ss = String(s % 60).padStart(2,"0");
+      const mm = String(Math.floor(s / 60)).padStart(2, "0");
+      const ss = String(s % 60).padStart(2, "0");
       return `T-${mm}:${ss}`;
     }
 
-    function updateUI(){
+    function updateUI() {
       el.count.textContent = `${state.taps} / ${REQUIRED_TAPS}`;
       const pct = Math.min(100, Math.round((state.taps / REQUIRED_TAPS) * 100));
       el.bar.style.width = `${pct}%`;
 
-      if(state.success){
+      if (state.success) {
         el.progText.textContent = "Docked";
         el.progDot.classList.add("ok");
-      } else if(state.taps > 0){
+      } else if (state.taps > 0) {
         el.progText.textContent = `Pulses: ${state.taps}/${REQUIRED_TAPS}`;
         el.progDot.classList.add("ok");
       } else {
@@ -903,7 +1073,7 @@
         el.progDot.classList.remove("ok");
       }
 
-      if(COUNTDOWN_SECONDS > 0){
+      if (COUNTDOWN_SECONDS > 0) {
         el.timeLeft.textContent = `${Math.max(0, state.timeLeft)}s`;
         el.timerText.textContent = formatTMinus(state.timeLeft);
       } else {
@@ -911,9 +1081,9 @@
         el.timerText.textContent = "T-—";
       }
 
-      if(state.success){
+      if (state.success) {
         el.subTitle.textContent = "Mission complete. Energy locked in.";
-      } else if(state.timeLeft === 0 && COUNTDOWN_SECONDS > 0){
+      } else if (state.timeLeft === 0 && COUNTDOWN_SECONDS > 0) {
         el.subTitle.textContent = "Timer expired. Refresh to retry.";
       } else {
         el.subTitle.textContent = `Tap ${REQUIRED_TAPS} times to send energy`;
@@ -924,18 +1094,18 @@
       el.btnTap.style.opacity = disabled ? 0.55 : 1;
     }
 
-    function startTimerIfNeeded(){
-      if(COUNTDOWN_SECONDS <= 0) return;
-      if(state.timerRunning) return;
+    function startTimerIfNeeded() {
+      if (COUNTDOWN_SECONDS <= 0) return;
+      if (state.timerRunning) return;
 
       state.timerRunning = true;
       timerInterval = setInterval(() => {
-        if(state.success){
+        if (state.success) {
           stopTimer();
           return;
         }
         state.timeLeft = Math.max(0, state.timeLeft - 1);
-        if(state.timeLeft === 0){
+        if (state.timeLeft === 0) {
           stopTimer();
           el.lastAction.textContent = "⛔ Timer expired (refresh to retry)";
         }
@@ -943,36 +1113,36 @@
       }, 1000);
     }
 
-    function stopTimer(){
+    function stopTimer() {
       state.timerRunning = false;
-      if(timerInterval){
+      if (timerInterval) {
         clearInterval(timerInterval);
         timerInterval = null;
       }
     }
 
-    function burstParticles(){
+    function burstParticles() {
       const colors = ["rgba(0,234,255,0.95)", "rgba(0,255,156,0.95)", "rgba(168,85,255,0.95)", "rgba(255,255,255,0.85)"];
-      for(let i=0;i<26;i++){
+      for (let i = 0; i < 26; i++) {
         const p = document.createElement("div");
         p.className = "particle";
-        p.style.left = `${Math.random()*100}%`;
-        p.style.top = `${-20 - Math.random()*40}px`;
-        p.style.background = colors[Math.floor(Math.random()*colors.length)];
-        p.style.animationDuration = `${1.2 + Math.random()*0.9}s`;
-        p.style.opacity = `${0.65 + Math.random()*0.35}`;
+        p.style.left = `${Math.random() * 100}%`;
+        p.style.top = `${-20 - Math.random() * 40}px`;
+        p.style.background = colors[Math.floor(Math.random() * colors.length)];
+        p.style.animationDuration = `${1.2 + Math.random() * 0.9}s`;
+        p.style.opacity = `${0.65 + Math.random() * 0.35}`;
         el.hud.appendChild(p);
-        setTimeout(()=>p.remove(), 2200);
+        setTimeout(() => p.remove(), 2200);
       }
     }
 
-    function showSuccess(){
+    function showSuccess() {
       state.success = true;
       state.finishedAt = Date.now();
       stopTimer();
 
       const t = new Date(state.finishedAt);
-      const stamp = `${t.toLocaleDateString()} ${t.toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"})}`;
+      const stamp = `${t.toLocaleDateString()} ${t.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
       el.stamp.textContent = `Time: ${stamp}`;
       el.tapStamp.textContent = `Pulses: ${state.taps}`;
 
@@ -983,7 +1153,7 @@
       updateUI();
     }
 
-    function hideSuccess(){
+    function hideSuccess() {
       el.successOverlay.style.display = "none";
     }
 
@@ -992,19 +1162,19 @@
     let blinkInterval = null;
 
     /* ── Camera permission pre-request ── */
-    async function requestCameraPermission(){
+    async function requestCameraPermission() {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
           video: { facingMode: 'environment' }
         });
         const tracks = stream.getVideoTracks();
         if (tracks.length > 0) torchTrack = tracks[0];
-      } catch(err){
+      } catch (err) {
         console.warn("Camera pre-request failed:", err);
       }
     }
 
-    async function toggleTorch(){
+    async function toggleTorch() {
       try {
         if (!torchTrack) {
           const stream = await navigator.mediaDevices.getUserMedia({
@@ -1018,7 +1188,7 @@
         torchOn = !torchOn;
 
         /* FIX 3: Always stop blink interval before applying new state */
-        if(blinkInterval){
+        if (blinkInterval) {
           clearInterval(blinkInterval);
           blinkInterval = null;
         }
@@ -1030,7 +1200,7 @@
         el.btnTorch.textContent = torchOn ? 'Turn Off Flashlight 🔦' : 'Turn On Flashlight 🔥';
         el.btnTorch.style.background = torchOn ? 'rgba(255,204,0,0.2)' : '';
 
-        if(torchOn){
+        if (torchOn) {
           /* Show slider when torch turns on */
           document.getElementById('blinkSliderWrap').classList.add('visible');
         } else {
@@ -1047,20 +1217,20 @@
 
     /* ── Blink speed slider logic ── */
     /* slider value 0 = no blink, 1-10 = progressively faster */
-    function applyBlinkSpeed(val){
+    function applyBlinkSpeed(val) {
       /* Clear existing blink interval */
-      if(blinkInterval){
+      if (blinkInterval) {
         clearInterval(blinkInterval);
         blinkInterval = null;
         /* Ensure torch is in the ON state between blinks when stopping */
-        if(torchTrack && torchOn){
-          torchTrack.applyConstraints({ advanced: [{ torch: true }] }).catch(()=>{});
+        if (torchTrack && torchOn) {
+          torchTrack.applyConstraints({ advanced: [{ torch: true }] }).catch(() => { });
         }
       }
 
       const statusEl = document.getElementById('blinkStatus');
 
-      if(val === 0){
+      if (val === 0) {
         statusEl.textContent = 'No Blink (Steady)';
         return;
       }
@@ -1071,18 +1241,18 @@
 
       let blinkState = true;
       blinkInterval = setInterval(async () => {
-        if(!torchTrack) return;
+        if (!torchTrack) return;
         blinkState = !blinkState;
-        try{
+        try {
           await torchTrack.applyConstraints({ advanced: [{ torch: blinkState }] });
-        }catch(e){}
+        } catch (e) { }
       }, ms);
     }
 
-    function onTap(x, y){
+    function onTap(x, y) {
       unlockAudio();
-      if(state.success) return;
-      if(COUNTDOWN_SECONDS > 0 && state.timeLeft === 0) return;
+      if (state.success) return;
+      if (COUNTDOWN_SECONDS > 0 && state.timeLeft === 0) return;
 
       startTimerIfNeeded();
 
@@ -1093,18 +1263,18 @@
       if (state.taps % 10 === 0) haptic(35);
       else haptic(12);
 
-      if (typeof x === "number" && typeof y === "number"){
+      if (typeof x === "number" && typeof y === "number") {
         spawnTapSparks(x, y);
       }
 
-      if(state.taps >= REQUIRED_TAPS){
+      if (state.taps >= REQUIRED_TAPS) {
         showSuccess();
       } else {
         updateUI();
       }
     }
 
-    function init(){
+    function init() {
       state = {
         taps: 0,
         success: false,
@@ -1117,7 +1287,7 @@
       el.lastAction.textContent = "🟢 Ready – tap to start";
 
       el.tapSurface.addEventListener("pointerdown", (e) => {
-        if(e.target.closest("#successOverlay")) return;
+        if (e.target.closest("#successOverlay")) return;
         onTap(e.clientX, e.clientY);
       });
 
@@ -1140,7 +1310,7 @@
       blinkSlider.addEventListener('pointerdown', (e) => e.stopPropagation());
       blinkSlider.addEventListener('touchstart', (e) => e.stopPropagation(), { passive: true });
       blinkSlider.addEventListener('touchmove', (e) => e.stopPropagation(), { passive: true });
-      blinkSlider.addEventListener('touchend',  (e) => e.stopPropagation(), { passive: true });
+      blinkSlider.addEventListener('touchend', (e) => e.stopPropagation(), { passive: true });
 
       // Swipe-down to reload (only when success overlay is visible)
       let swipeStartY = null;
@@ -1166,10 +1336,10 @@
     }
 
     /* ── Permission Popup ── */
-    function showPermPopup(){
+    function showPermPopup() {
       const overlay = document.getElementById('permOverlay');
       const btnAllow = document.getElementById('permAllow');
-      const btnDeny  = document.getElementById('permDeny');
+      const btnDeny = document.getElementById('permDeny');
 
       overlay.classList.remove('hidden');
 
@@ -1187,7 +1357,7 @@
 
     /* FIX 1: Popup HTML now lives before this script so #permOverlay exists.
        Call init after all DOM is ready — use window.onload as safety net. */
-    if(document.readyState === 'loading'){
+    if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', init);
     } else {
       init();
@@ -1215,4 +1385,5 @@
   </div>
 
 </body>
+
 </html>
